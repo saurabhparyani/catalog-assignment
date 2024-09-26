@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Circular Std';
+    src: url('/src/assets/fonts/CircularStd-Book.otf') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
