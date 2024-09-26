@@ -6,7 +6,7 @@ const Price = () => {
         <div className="flex">
           {/* NUMBER */}
           <div className="absolute top-[60px] left-[60px]">
-            <h1 className="text-[#1A243A] text-[70px] font-circular leading-[88.56px]">
+            <h1 className="text-[#1A243A] text-[70px] dark:text-gray-200 font-circular leading-[88.56px]">
               63,179.71
             </h1>
           </div>

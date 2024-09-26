@@ -25,7 +25,7 @@ const Chart = () => {
         <section
           className={`${
             isFullscreen
-              ? "w-full h-full max-w-[1200px] max-h-[800px] bg-white"
+              ? "w-full h-full max-w-[1200px] max-h-[800px] bg-white dark:bg-gray-900"
               : "absolute w-[839px] left-[60px] top-[386px]"
           } bg-[#E8E7FF]`}
         >

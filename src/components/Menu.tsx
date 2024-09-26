@@ -7,7 +7,7 @@ const Menu = () => {
     const isActive = location.pathname === path;
     return `absolute top-0 z-10 ${
       isActive
-        ? "text-[#1A243A] border-b-[3px] border-[#4B40EE] pb-[10px]"
+        ? "text-[#1A243A] dark:text-gray-200 border-b-[3px] border-[#4B40EE] pb-[10px]"
         : "text-[#6F7177]"
     }`;
   };
@@ -19,7 +19,7 @@ const Menu = () => {
           to="/summary"
           className={`${getTabStyle("/summary")} left-[60px]`}
         >
-          <h3 className="font-circular text-[18px] leading-[23px]">Summary</h3>
+          <h3 className="font-circular text-[18px]  leading-[23px]">Summary</h3>
         </Link>
         <Link to="/chart" className={`${getTabStyle("/chart")} left-[168px]`}>
           <h3 className="font-circular text-[18px] leading-[23px]">Chart</h3>

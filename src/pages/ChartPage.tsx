@@ -13,8 +13,6 @@ const ChartPage = () => {
           <Actions />
           <Chart />
         </div>
-        {/* TODO: Add dark mode toggle */}
-        <div>hi there</div>
       </div>
     </>
   );
