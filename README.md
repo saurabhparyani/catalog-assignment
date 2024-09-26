@@ -1,3 +1,16 @@
+# Catalog Assignment - Saurabh Paryani
+
+## LIVE LINK: https://catalog-assignment-saurabhparyani.vercel.app
+
+## Technologies Used:
+- React + Typescript (Used Vite to set up React)
+- TailwindCSS
+- vite-plugin-svgr to import SVGs as React Components
+
+
+-----------------------------------------------------------------------------
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
