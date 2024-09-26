@@ -4,52 +4,80 @@ import VerticalLogo from "../assets/vertical.svg";
 import HorizontalLogo from "../assets/horizontal.svg";
 import GridLinesLogo from "../assets/grid.svg";
 import VolumeLogo from "../assets/volume.svg";
+import { useFullscreen } from "../hooks/useFullscreen";
+import FullscreenIcon from "../assets/fullscreen.svg";
 
 const Chart = () => {
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
+
   return (
-    <section className="w-[839px] relative h-screen">
-      {/* GRID LINES */}
-      <div className="absolute top-[186px] left-[60px]">
-        <GridLinesLogo />
+    <>
+      {isFullscreen && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-lg z-40" />
+      )}
+      <div
+        className={`${
+          isFullscreen
+            ? "fixed inset-0 z-50 flex items-center justify-center top-20 left-10 h-[800px]"
+            : "min-h-screen"
+        }`}
+      >
+        <section
+          className={`${
+            isFullscreen
+              ? "w-full h-full max-w-[1200px] max-h-[800px] bg-white"
+              : "absolute w-[839px] left-[60px] top-[386px]"
+          } bg-[#E8E7FF]`}
+        >
+          <div
+            className={`${
+              isFullscreen ? "scale-150 translate-x-80 translate-y-10" : ""
+            }`}
+          >
+            <div className="absolute w-[750px] h-[341px] left-0 top-[1px]">
+              <div className="absolute w-full h-full left-0 top-0">
+                <GridLinesLogo />
+              </div>
+              <div className="absolute w-full h-full left-0 top-0">
+                <ChartLogo />
+              </div>
+              <div className="absolute w-full h-[273px] left-0 top-[2px]">
+                <LineLogo />
+              </div>
+              <div className="absolute w-0 h-[341px] left-[330px] top-0">
+                <VerticalLogo />
+              </div>
+              <div className="absolute w-[750px] h-0 left-0 top-[61px]">
+                <HorizontalLogo />
+              </div>
+            </div>
+            <div className="absolute w-[109px] h-[33px] left-[730px] top-[45px] bg-[#1A243A] rounded-[5px]">
+              <span className="absolute left-[14px] top-[5px] font-circular text-[18px] leading-[23px] text-white">
+                64,850.35
+              </span>
+            </div>
+            <div className="absolute w-[98px] h-[33px] left-[730px] top-[134px] bg-[#4B40EE] rounded-[5px]">
+              <span className="absolute left-[14px] top-[5px] font-circular text-[18px] leading-[23px] text-white">
+                63,179.71
+              </span>
+            </div>
+            <div className="absolute px-[5px] top-[303px]">
+              <div className="w-full h-full">
+                <VolumeLogo />
+              </div>
+            </div>
+          </div>
+          {isFullscreen && (
+            <button
+              onClick={toggleFullscreen}
+              className="absolute top-4 right-10 p-2 bg-gray-200 rounded-full hover:bg-gray-300 transition-colors"
+            >
+              <FullscreenIcon />
+            </button>
+          )}
+        </section>
       </div>
-
-      {/* CHART AND LINES */}
-      <div className="absolute top-[187px] left-[60px] w-[750px] h-[341px]">
-        <div className="w-full h-full">
-          <ChartLogo />
-        </div>
-        <div className="w-full h-full absolute top-0 left-0">
-          <LineLogo />
-        </div>
-      </div>
-
-      {/* VERTICAL DOTTED LINE */}
-      <div className="absolute top-[186px] left-[390px]">
-        <VerticalLogo />
-      </div>
-
-      {/* HORIZONTAL DOTTED LINE */}
-      <div className="absolute top-[246px] left-[60px]">
-        <HorizontalLogo />
-      </div>
-
-      {/* LABELS */}
-      <div className="absolute left-[790px] top-[231px] w-[109px] h-[33px] bg-[#1A243A] rounded-[5px] px-[14px] py-[5px]">
-        <div className="text-white font-circular text-[18px] leading-[22.77px]">
-          64,850.35
-        </div>
-      </div>
-      <div className="absolute left-[790px] flex items-center justify-center top-[320px] w-[98px] h-[33px] bg-[#4B40EE] rounded-[5px] px-[14px] py-[5px]">
-        <div className="text-white flex items-center justify-center font-circular text-[18px] leading-[22.77px]">
-          63,179.71
-        </div>
-      </div>
-
-      {/* VOLUME GRAPH */}
-      <div className="absolute top-[490px] left-[65px]">
-        <VolumeLogo />
-      </div>
-    </section>
+    </>
   );
 };
 

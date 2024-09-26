@@ -1,64 +1,65 @@
+import { useState } from "react";
 import FullscreenIcon from "../assets/fullscreen.svg";
 import CompareIcon from "../assets/compare.svg";
+import { useFullscreen } from "../hooks/useFullscreen";
 
 const Actions = () => {
+  const [selectedPeriod, setSelectedPeriod] = useState("1w");
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
+
   return (
-    <section className="w-[750px] h-[33px] relative">
-      {/* ACTIONS NAV */}
-      <nav className="absolute top-[160px] flex">
-        {/* FULL SCREEN */}
-        <div className="flex">
-          <div className="absolute left-[60px]">
-            <FullscreenIcon />
-          </div>
-          <div className="absolute left-[94px] text-[18px] text-[#6F7177] font-circular leading-[22.77px]">
-            Fullscreen
-          </div>
-        </div>
-        {/* COMPARE */}
-        <div className="flex">
-          <div className="absolute left-[208px]">
-            <CompareIcon />
-          </div>
-          <div className="absolute left-[242px] text-[18px] text-[#6F7177] font-circular leading-[22.77px]">
-            Compare
-          </div>
+    <section className="absolute w-[750px] h-[33px] left-[60px] top-[325px]">
+      <div className="flex justify-between items-center">
+        {/* FULLSCREEN AND COMPARE */}
+        <div className="flex items-center">
+          {/* FULLSCREEN */}
+          <button
+            onClick={toggleFullscreen}
+            className="flex items-center space-x-2.5 text-[#6F7177]"
+          >
+            <div className="w-[24px] h-[24px]">
+              <FullscreenIcon />
+            </div>
+            <span className="font-circular text-[18px] leading-[23px]">
+              Fullscreen
+            </span>
+          </button>
+          {/* COMPARE */}
+          <button
+            className={`${
+              isFullscreen
+                ? "hidden"
+                : "flex items-center space-x-2.5 text-[#6F7177] ml-[31px]"
+            }`}
+          >
+            <div className="w-[24px] h-[24px]">
+              <CompareIcon />
+            </div>
+            <span className="font-circular text-[18px] leading-[23px]">
+              Compare
+            </span>
+          </button>
         </div>
 
-        {/* TIME */}
-        <div className="w-[361px] h-[33px]">
-          {/* 1d */}
-          <div className="absolute left-[449px] text-[18px] text-[#6F7177] font-circular leading-[22.77px]">
-            1d
-          </div>
-          {/* 3d */}
-          <div className="absolute left-[500px] text-[18px] text-[#6F7177] font-circular leading-[22.77px]">
-            3d
-          </div>
-          {/* 1w */}
-          <div className="absolute left-[541px] top-[-5px] bg-[#4B40EE] border rounded-[5px] w-[49px] h-[33px]">
-            <div className="absolute left-[14px] top-[5px] flex justify-center items-center font-circular text-[18px] text-white leading-[22.77px]">
-              1w
-            </div>
-          </div>
-          {/* 1m */}
-          <div className="absolute left-[610px] text-[18px] text-[#6F7177] font-circular leading-[22.77px]">
-            1m
-          </div>
-          {/* 6m */}
-          <div className="absolute left-[666px] text-[18px] text-[#6F7177] font-circular leading-[22.77px]">
-            6m
-          </div>
-          {/* 1y */}
-          <div className="absolute left-[726px] text-[18px] text-[#6F7177] font-circular leading-[22.77px]">
-            1y
-          </div>
-          {/* max */}
-          <div className="absolute left-[776px] text-[18px] text-[#6F7177] font-circular leading-[22.77px]">
-            max
-          </div>
+        {/* PERIODS */}
+        <div className={`flex items-center ${isFullscreen ? "ml-40" : ""}`}>
+          {["1d", "3d", "1w", "1m", "6m", "1y", "max"].map((period, index) => (
+            <button
+              key={period}
+              onClick={() => setSelectedPeriod(period)}
+              className={`font-circular text-[18px] leading-[23px] ${
+                period === selectedPeriod
+                  ? "bg-[#4B40EE] text-white"
+                  : "text-[#6F7177]"
+              } ${
+                index > 0 ? "ml-[14px]" : ""
+              } w-[45px] h-[33px] flex items-center justify-center rounded-[5px]`}
+            >
+              <span className="px-[14px] py-[5px]">{period}</span>
+            </button>
+          ))}
         </div>
-      </nav>
+      </div>
     </section>
   );
 };
