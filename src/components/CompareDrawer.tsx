@@ -51,7 +51,7 @@ const CompareDrawer: React.FC<CompareDrawerProps> = ({ isOpen, onClose }) => {
   const fetchCryptoData = async () => {
     setIsLoading(true);
     try {
-      const apiKey = import.meta.env.VITE_COINGECKO_API_KEY;
+      const apiKey = import.meta.env.VITE_COINGECKO_API;
       const response = await fetch(
         `https://api.coingecko.com/api/v3/simple/price?ids=${selectedCrypto},bitcoin&vs_currencies=usd&include_24hr_change=true&x_cg_demo_api_key=${apiKey}`
       );
