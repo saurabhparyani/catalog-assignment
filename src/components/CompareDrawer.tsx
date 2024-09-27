@@ -46,13 +46,16 @@ const CompareDrawer: React.FC<CompareDrawerProps> = ({ isOpen, onClose }) => {
     if (selectedCrypto) {
       fetchCryptoData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCrypto]);
 
   const fetchCryptoData = async () => {
     setIsLoading(true);
     try {
-      const coinDrawerUrl = `${import.meta.env.VITE_COIN_DRAWER_URL}`;
-      const response = await fetch(coinDrawerUrl);
+      const coinDrawerApiKey = import.meta.env.VITE_COINGECKO_API_KEY;
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${selectedCrypto},bitcoin&vs_currencies=usd&include_24hr_change=true&x_cg_demo_api_key=${coinDrawerApiKey}`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
