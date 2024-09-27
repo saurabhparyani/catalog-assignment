@@ -3,7 +3,11 @@ import FullscreenIcon from "../assets/fullscreen.svg";
 import CompareIcon from "../assets/compare.svg";
 import { useFullscreen } from "../hooks/useFullscreen";
 
-const Actions = () => {
+interface ActionsProps {
+  onCompareClick: () => void;
+}
+
+const Actions: React.FC<ActionsProps> = ({ onCompareClick }) => {
   const [selectedPeriod, setSelectedPeriod] = useState("1w");
   const { isFullscreen, toggleFullscreen } = useFullscreen();
 
@@ -26,6 +30,7 @@ const Actions = () => {
           </button>
           {/* COMPARE */}
           <button
+            onClick={onCompareClick}
             className={`${
               isFullscreen
                 ? "hidden"
