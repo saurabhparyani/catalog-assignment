@@ -30,7 +30,8 @@ const StatisticsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const coinStatsUrl = `${import.meta.env.VITE_COIN_STATS_URL}`;
+        const coinStatsApiKey = import.meta.env.VITE_COINGECKO_API_KEY;
+        const coinStatsUrl = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2Cethereum%2Ctether%2Cbinancecoin%2Csolana&order=market_cap_desc&per_page=5&page=1&sparkline=true&precision=2&x_cg_demo_api_key=${coinStatsApiKey}`;
         const response = await fetch(coinStatsUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
