@@ -2,10 +2,23 @@
 
 ## LIVE LINK: https://catalog-assignment-saurabhparyani.vercel.app
 
-## Technologies Used:
+## Features
+- Fullscreen mode
+- Compare button that compares current coin (named it Catalog coin) with top 5 coins (BTC, ETH, USDT, BNB, SOL)
+- Statistics tab that shows a market cap distribution of top 5 coins, and a 7-day price trend
+- Fetched crypto news in the Analysis tab with live links
+- Deployed the app
+
+## Technologies/Libraries Used:
 - React + Typescript (Used Vite to set up React)
 - TailwindCSS
+- ShadcnUI
+- Recharts.js
 - vite-plugin-svgr to import SVGs as React Components
+
+## APIs Used:
+- CoinGecko API for coins
+- Cryptocurrency News (Bitcoinist) - RapidAPI
 
 
 -----------------------------------------------------------------------------
