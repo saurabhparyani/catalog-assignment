@@ -30,8 +30,8 @@ const StatisticsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = import.meta.env.VITE_COIN_STATS_URL;
-        const response = await fetch(url);
+        const coinStatsUrl = `${import.meta.env.VITE_COIN_STATS_URL}`;
+        const response = await fetch(coinStatsUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

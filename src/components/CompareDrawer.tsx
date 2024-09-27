@@ -51,8 +51,8 @@ const CompareDrawer: React.FC<CompareDrawerProps> = ({ isOpen, onClose }) => {
   const fetchCryptoData = async () => {
     setIsLoading(true);
     try {
-      const url = import.meta.env.VITE_COIN_DRAWER_URL;
-      const response = await fetch(url);
+      const coinDrawerUrl = `${import.meta.env.VITE_COIN_DRAWER_URL}`;
+      const response = await fetch(coinDrawerUrl);
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
