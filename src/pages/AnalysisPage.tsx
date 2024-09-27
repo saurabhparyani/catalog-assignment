@@ -7,10 +7,7 @@ interface NewsItem {
   title: string;
   description: string;
   url: string;
-  publishedAt: string;
-  source: {
-    name: string;
-  };
+  createdAt: string;
 }
 
 const AnalysisPage = () => {
@@ -21,19 +18,29 @@ const AnalysisPage = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const newsApiKey = import.meta.env.VITE_NEWS_API_KEY;
-        const response = await fetch(
-          `https://newsapi.org/v2/everything?q=bitcoin&sortBy=popularity&apiKey=${newsApiKey}&pageSize=5&language=en`
-        );
+        const url = "https://cryptocurrency-news2.p.rapidapi.com/v1/bitcoinist";
+        const options = {
+          method: "GET",
+          headers: {
+            "x-rapidapi-key": import.meta.env.VITE_RAPID_API_KEY,
+            "x-rapidapi-host": import.meta.env.VITE_RAPID_API_HOST,
+          },
+        };
+
+        const response = await fetch(url, options);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        console.log(data);
-        setNewsItems(data.articles);
+        const result = await response.json();
+        const cleanedData = result.data.slice(0, 5).map((item: NewsItem) => ({
+          ...item,
+          title: decodeHTMLEntities(item.title),
+          description: decodeHTMLEntities(item.description),
+        }));
+        setNewsItems(cleanedData);
       } catch (error) {
         console.error("Error fetching news:", error);
-        setError("Failed to fetch Bitcoin news. Please try again later.");
+        setError("Failed to fetch Bitcoinist news. Please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -42,12 +49,18 @@ const AnalysisPage = () => {
     fetchNews();
   }, []);
 
+  const decodeHTMLEntities = (text: string) => {
+    const textArea = document.createElement("textarea");
+    textArea.innerHTML = text;
+    return textArea.value;
+  };
+
   return (
     <div className="relative">
       <Price />
       <Menu />
       <div className="absolute top-[300px] left-[60px] right-[60px] pb-10 font-circular leading-[23px]">
-        <h2 className="text-3xl font-bold mb-6">Bitcoin News Analysis</h2>
+        <h2 className="text-3xl font-bold mb-6">Bitcoinist News Analysis</h2>
         {isLoading ? (
           <div className="flex justify-center items-center mt-10">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
@@ -73,10 +86,7 @@ const AnalysisPage = () => {
                 <CardContent>
                   <p className="mb-2">{item.description}</p>
                   <div className="text-sm text-gray-500">
-                    <span>{item.source.name}</span> •
-                    <span className="ml-2">
-                      {new Date(item.publishedAt).toLocaleDateString()}
-                    </span>
+                    <span>{new Date(item.createdAt).toLocaleDateString()}</span>
                   </div>
                 </CardContent>
               </Card>
