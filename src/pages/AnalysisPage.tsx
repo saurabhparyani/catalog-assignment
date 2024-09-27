@@ -21,8 +21,10 @@ const AnalysisPage = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const newsUrl = `${import.meta.env.VITE_NEWS_URL}`;
-        const response = await fetch(newsUrl);
+        const newsApiKey = import.meta.env.VITE_NEWS_API_KEY;
+        const response = await fetch(
+          `https://newsapi.org/v2/everything?q=bitcoin&sortBy=popularity&apiKey=${newsApiKey}&pageSize=5&language=en`
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
