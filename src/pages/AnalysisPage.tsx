@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Menu from "../components/Menu";
-import Price from "../components/Price";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface NewsItem {
@@ -18,7 +17,8 @@ const AnalysisPage = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const url = "https://cryptocurrency-news2.p.rapidapi.com/v1/bitcoinist";
+        const url =
+          "https://cryptocurrency-news2.p.rapidapi.com/v1/cointelegraph";
         const options = {
           method: "GET",
           headers: {
@@ -56,8 +56,7 @@ const AnalysisPage = () => {
   };
 
   return (
-    <div className="relative">
-      <Price />
+    <div className="relative -mt-[150px]">
       <Menu />
       <div className="absolute top-[300px] left-[60px] right-[60px] pb-10 font-circular leading-[23px]">
         <h2 className="text-3xl font-bold mb-6">Bitcoinist News Analysis</h2>

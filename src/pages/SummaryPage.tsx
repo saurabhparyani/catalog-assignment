@@ -1,11 +1,9 @@
 import Menu from "../components/Menu";
-import Price from "../components/Price";
 
 const SummaryPage = () => {
   return (
     <>
-      <div className="relative">
-        <Price />
+      <div className="relative -mt-[150px]">
         <Menu />
         <div className="absolute top-[300px] left-[60px]  max-w-[1000px] mx-auto">
           <h2 className="text-4xl font-bold mb-4 font-circular leading-[23px]">

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Menu from "../components/Menu";
-import Price from "../components/Price";
 import {
   ChartContainer,
   ChartTooltip,
@@ -87,8 +86,7 @@ const StatisticsPage = () => {
     }));
 
   return (
-    <div className="relative">
-      <Price />
+    <div className="relative -mt-[150px]">
       <Menu />
       <div className="absolute top-[300px] left-[60px] font-circular leading-[23px] w-full max-w-[1200px] pb-10">
         <h2 className="text-3xl font-bold mb-6">Cryptocurrency Statistics</h2>

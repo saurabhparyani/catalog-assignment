@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 
-const Price = () => {
-  const [price, setPrice] = useState<number | null>(null);
+interface PriceProps {
+  period: string;
+  lastPrice: number | null; // Accept lastPrice as a prop
+}
+
+const Price: React.FC<PriceProps> = ({ period, lastPrice }) => {
   const [priceChange, setPriceChange] = useState<number | null>(null);
   const [priceChangePercentage, setPriceChangePercentage] = useState<
     number | null
@@ -9,21 +13,21 @@ const Price = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (lastPrice === null) return; // Ensure lastPrice is available
+
       try {
         const coinPriceApiKey = import.meta.env.VITE_COINGECKO_API_KEY;
-        const coinStatsUrl = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1&x_cg_demo_api_key=${coinPriceApiKey}`;
-        const response = await fetch(coinStatsUrl);
+        const coinPriceUrl = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=${period}&x_cg_demo_api_key=${coinPriceApiKey}`;
+        const response = await fetch(coinPriceUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        const latestPrice = data.prices[data.prices.length - 1][1];
-        const yesterdayPrice = data.prices[0][1];
+        const periodStartPrice = data.prices[0][1];
 
-        setPrice(latestPrice);
-        setPriceChange(latestPrice - yesterdayPrice);
+        setPriceChange(lastPrice - periodStartPrice);
         setPriceChangePercentage(
-          ((latestPrice - yesterdayPrice) / yesterdayPrice) * 100
+          ((lastPrice - periodStartPrice) / periodStartPrice) * 100
         );
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -31,9 +35,7 @@ const Price = () => {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 18000000); // Update every 5 hours
-    return () => clearInterval(interval);
-  }, []);
+  }, [period, lastPrice]);
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("en-US", {
@@ -50,11 +52,12 @@ const Price = () => {
           {/* NUMBER */}
           <div className="absolute top-[60px] left-[60px]">
             <h1 className="text-[#1A243A] text-[70px] dark:text-gray-200 font-circular leading-[88.56px]">
-              {price ? formatPrice(price) : "Loading..."}
+              {lastPrice ? formatPrice(lastPrice) : "Loading..."}{" "}
+              {/* Use lastPrice here */}
             </h1>
           </div>
           {/* USD */}
-          <div className="absolute top-[77px] left-[377px]">
+          <div className="absolute top-[77px] left-[380px]">
             <h3 className="font-circular text-[#BDBEBF] text-[24px] leading-[30.36px]">
               USD
             </h3>
