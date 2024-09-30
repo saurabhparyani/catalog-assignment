@@ -10,8 +10,8 @@ const Price = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const coinChartApiKey = import.meta.env.VITE_COINGECKO_API_KEY;
-        const coinStatsUrl = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1&x_cg_demo_api_key=${coinChartApiKey}`;
+        const coinPriceApiKey = import.meta.env.VITE_COINGECKO_API_KEY;
+        const coinStatsUrl = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1&x_cg_demo_api_key=${coinPriceApiKey}`;
         const response = await fetch(coinStatsUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
