@@ -53,9 +53,7 @@ const Chart: React.FC<{ period: string }> = ({ period }) => {
         ((lastPrice - minPrice) / (maxPrice - minPrice)) * chartHeight;
       setLastPointY(yPosition);
 
-      // Set initial tooltip price to the last price in the data
       setTooltipPrice(lastPrice);
-      // Set initial tooltip position to the last point
       setTooltipPosition({ x: 450, y: 20 });
     }
   }, [data]);
@@ -63,8 +61,8 @@ const Chart: React.FC<{ period: string }> = ({ period }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const coinStatsApiKey = import.meta.env.VITE_COINGECKO_API_KEY;
-        const coinStatsUrl = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=${periods[period]}&x_cg_demo_api_key=${coinStatsApiKey}`;
+        const coinChartApiKey = import.meta.env.VITE_COINGECKO_API_KEY;
+        const coinStatsUrl = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=${periods[period]}&x_cg_demo_api_key=${coinChartApiKey}`;
         const response = await fetch(coinStatsUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -100,7 +98,6 @@ const Chart: React.FC<{ period: string }> = ({ period }) => {
   };
 
   const handleMouseLeave = () => {
-    // Don't reset the tooltip position when mouse leaves
     if (data.length > 0) {
       setTooltipPrice(data[data.length - 1].price);
     }
