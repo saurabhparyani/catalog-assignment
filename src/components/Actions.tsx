@@ -5,9 +5,13 @@ import { useFullscreen } from "../hooks/useFullscreen";
 
 interface ActionsProps {
   onCompareClick: () => void;
+  onPeriodChange: (period: string) => void;
 }
 
-const Actions: React.FC<ActionsProps> = ({ onCompareClick }) => {
+const Actions: React.FC<ActionsProps> = ({
+  onCompareClick,
+  onPeriodChange,
+}) => {
   const [selectedPeriod, setSelectedPeriod] = useState("1w");
   const { isFullscreen, toggleFullscreen } = useFullscreen();
 
@@ -51,7 +55,10 @@ const Actions: React.FC<ActionsProps> = ({ onCompareClick }) => {
           {["1d", "3d", "1w", "1m", "6m", "1y", "max"].map((period, index) => (
             <button
               key={period}
-              onClick={() => setSelectedPeriod(period)}
+              onClick={() => {
+                setSelectedPeriod(period);
+                onPeriodChange(period);
+              }}
               className={`font-circular text-[18px] leading-[23px] ${
                 period === selectedPeriod
                   ? "bg-[#4B40EE] text-white"

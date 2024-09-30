@@ -7,6 +7,7 @@ import CompareDrawer from "../components/CompareDrawer";
 
 const ChartPage = () => {
   const [isCompareDrawerOpen, setIsCompareDrawerOpen] = useState(false);
+  const [selectedPeriod, setSelectedPeriod] = useState<string>("1w");
 
   const handleCompareClick = () => {
     setIsCompareDrawerOpen(true);
@@ -16,14 +17,21 @@ const ChartPage = () => {
     setIsCompareDrawerOpen(false);
   };
 
+  const handlePeriodChange = (period: string) => {
+    setSelectedPeriod(period);
+  };
+
   return (
     <>
       <div className="flex justify-between">
         <div>
           <Price />
           <Menu />
-          <Actions onCompareClick={handleCompareClick} />
-          <Chart />
+          <Actions
+            onCompareClick={handleCompareClick}
+            onPeriodChange={handlePeriodChange}
+          />
+          <Chart period={selectedPeriod} />
         </div>
       </div>
       <CompareDrawer isOpen={isCompareDrawerOpen} onClose={handleCloseDrawer} />
