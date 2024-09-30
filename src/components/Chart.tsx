@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Line,
   XAxis,
@@ -29,7 +29,10 @@ interface ChartData {
   price: number;
 }
 
-const Chart: React.FC<{ period: string }> = ({ period }) => {
+const Chart: React.FC<{
+  period: string;
+  onLastPriceChange: (price: number) => void;
+}> = ({ period, onLastPriceChange }) => {
   const [data, setData] = useState<ChartData[]>([]);
   const { isFullscreen, toggleFullscreen } = useFullscreen();
   const [lastPointY, setLastPointY] = useState<number | null>(null);
@@ -38,7 +41,7 @@ const Chart: React.FC<{ period: string }> = ({ period }) => {
     y: number;
   } | null>(null);
   const [tooltipPrice, setTooltipPrice] = useState<number | null>(null);
-  const tooltipTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [lastPrice, setLastPrice] = useState<number | null>(null);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -53,7 +56,7 @@ const Chart: React.FC<{ period: string }> = ({ period }) => {
         ((lastPrice - minPrice) / (maxPrice - minPrice)) * chartHeight;
       setLastPointY(yPosition);
 
-      setTooltipPrice(lastPrice);
+      setLastPrice(lastPrice);
       setTooltipPosition({ x: 450, y: 20 });
     }
   }, [data]);
@@ -75,32 +78,33 @@ const Chart: React.FC<{ period: string }> = ({ period }) => {
           })
         );
         setData(formattedData);
+
+        // Set the last price to the parent component
+        if (formattedData.length > 0) {
+          const lastPrice = formattedData[formattedData.length - 1].price;
+          onLastPriceChange(lastPrice); // Pass the last price to the parent
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [period]);
+  }, [period, onLastPriceChange]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMouseMove = (e: any) => {
     if (e.activeTooltipIndex !== undefined) {
-      if (tooltipTimeoutRef.current) {
-        clearTimeout(tooltipTimeoutRef.current);
-      }
       setTooltipPosition({
         x: e.activeCoordinate?.x || 0,
         y: e.activeCoordinate?.y || 0,
       });
-      setTooltipPrice(data[e.activeTooltipIndex].price);
+      setTooltipPrice(e.activePayload?.[0]?.payload.price || null);
     }
   };
 
   const handleMouseLeave = () => {
-    if (data.length > 0) {
-      setTooltipPrice(data[data.length - 1].price);
-    }
+    // Do nothing, tooltip will always stay visible
   };
 
   const formatPrice = (price: number) => {
@@ -221,7 +225,7 @@ const Chart: React.FC<{ period: string }> = ({ period }) => {
               </div>
             )}
             {/* LAST PRICE DIV */}
-            {lastPointY !== null && (
+            {lastPointY !== null && lastPrice !== null && (
               <div
                 className="absolute w-[98px] h-[33px] left-[730px] bg-[#4B40EE] rounded-[5px]"
                 style={{
@@ -230,9 +234,7 @@ const Chart: React.FC<{ period: string }> = ({ period }) => {
                 }}
               >
                 <span className="absolute inset-0 flex items-center justify-center font-circular text-[18px] leading-[23px] text-white">
-                  {data.length > 0
-                    ? formatPrice(data[data.length - 1].price)
-                    : ""}
+                  {formatPrice(lastPrice)}
                 </span>
               </div>
             )}

@@ -54,7 +54,7 @@ const Price = () => {
             </h1>
           </div>
           {/* USD */}
-          <div className="absolute top-[77px] left-[397px]">
+          <div className="absolute top-[77px] left-[377px]">
             <h3 className="font-circular text-[#BDBEBF] text-[24px] leading-[30.36px]">
               USD
             </h3>
